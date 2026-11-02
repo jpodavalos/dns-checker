@@ -1,3 +1,5 @@
+<img width="1001" height="756" alt="image" src="https://github.com/user-attachments/assets/6556ae4b-3d0c-4787-89c2-a7df173f8f5b" />
+
 # DNS Checker
 
 A bare-bones, mobile-first DNS lookup tool with a black-and-white interface. It queries Google (8.8.8.8) and Cloudflare (1.1.1.1) over DNS-over-HTTPS, compares their selected records, and displays the selected results inside one card:
