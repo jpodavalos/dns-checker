@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Look up DNS records through Google or Cloudflare."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <title>DNS Checker</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main id="main" class="shell">
+      <h1 class="sr-only">DNS Checker</h1>
+
+      <form id="lookup-form" class="lookup-form" novalidate>
+        <div class="field">
+          <label for="domain">Domain name</label>
+          <input
+            id="domain"
+            name="domain"
+            type="text"
+            value=""
+            placeholder="example.com"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            inputmode="url"
+          />
+        </div>
+
+        <button id="submit-button" class="submit-button" type="submit">
+          <span class="spinner" aria-hidden="true"></span>
+          <span id="submit-label">Look up</span>
+        </button>
+      </form>
+
+      <section
+        id="record-options"
+        class="record-options results-card"
+        aria-label="Records to check"
+      >
+        <fieldset id="record-filters" class="record-filters">
+          <legend class="sr-only">Records to check</legend>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="a" checked />
+            A
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="mx" checked />
+            MX
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="ns" checked />
+            NS
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="http" />
+            HTTP headers
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="spf" />
+            SPF
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="dkim" />
+            DKIM
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="dmarc" />
+            DMARC
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="ptr" />
+            PTR
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" data-filter="registrar" />
+            Domain registrar
+          </label>
+        </fieldset>
+      </section>
+
+      <p id="status-region" class="sr-only" role="status" aria-live="polite"></p>
+
+      <section
+        id="loading-view"
+        class="results"
+        aria-label="Loading DNS records"
+        aria-busy="true"
+        hidden
+      >
+        <div id="loading-card" class="results-card loading-card" aria-hidden="true"></div>
+      </section>
+
+      <section id="error-view" class="results" aria-labelledby="error-title" hidden>
+        <div class="error-panel" role="alert">
+          <h2 id="error-title">Lookup failed.</h2>
+          <p id="error-message">Check the domain and try again.</p>
+          <button id="error-retry" class="text-button" type="button">Try again</button>
+        </div>
+      </section>
+
+      <section id="results-view" class="results" aria-labelledby="results-title" hidden>
+        <header class="results-head">
+          <div class="results-summary">
+            <h2 id="results-title"></h2>
+            <div id="result-meta" class="result-meta" role="list" aria-label="Lookup summary"></div>
+          </div>
+          <div class="result-actions">
+            <button id="copy-all" class="text-button" type="button">
+              <span id="copy-label">Copy shown</span>
+            </button>
+            <button id="refresh-button" class="text-button" type="button">Refresh</button>
+          </div>
+        </header>
+
+        <div id="comparison-panel" class="comparison-panel" hidden></div>
+
+        <div class="results-card">
+          <div id="record-sections"></div>
+          <p id="no-selection" class="empty-selection" hidden>
+            No record types selected.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
